@@ -23,12 +23,12 @@ class MenusTableSeeder extends Seeder
                 'type' => 1,
                 'confirmation_message' => "",
             ),
-//            array(
-//                'title' => 'Treatment Verification',
-//                'is_parent' => 0,
-//                'type' => 2,
-//                'confirmation_message' => "",
-//            ),
+            array(
+                'title' => 'Loan',
+                'is_parent' => 0,
+                'type' => 1,
+                'confirmation_message' => "",
+            ),
 //            array(
 //                'title' => 'Compliance Score',
 //                'is_parent' => 0,
