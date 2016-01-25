@@ -19,7 +19,7 @@ class MenuItemsTableSeeder extends Seeder
             array(
                 'menu_id' => 1,
                 'description' => 'Send to M-Shwari',
-                'next_menu_id' => 1,
+                'next_menu_id' => 3,
                 'step' => 0,
                 'confirmation_phrase' => '',
             ),
@@ -33,7 +33,7 @@ class MenuItemsTableSeeder extends Seeder
             array(
                 'menu_id' => 1,
                 'description' => 'Loan',
-                'next_menu_id' => 1,
+                'next_menu_id' => 2,
                 'step' => 0,
                 'confirmation_phrase' => '',
             ),
@@ -58,13 +58,20 @@ class MenuItemsTableSeeder extends Seeder
                 'step' => 0,
                 'confirmation_phrase' => '',
             ),
-//            array(
-//                'menu_id' => 1,
-//                'description' => 'Ask TB Coordinator',
-//                'next_menu_id' => 6,
-//                'step' => 0,
-//                'confirmation_phrase' => '',
-//            ),
+            array(
+                'menu_id' => 3,
+                'description' => 'Enter Amount',
+                'next_menu_id' => 0,
+                'step' => 1,
+                'confirmation_phrase' => 'Amount',
+            ),
+            array(
+                'menu_id' => 3,
+                'description' => 'Enter PIN',
+                'next_menu_id' => 0,
+                'step' => 2,
+                'confirmation_phrase' => 'PIN',
+            ),
 //            array(
 //                'menu_id' => 1,
 //                'description' => 'Help',

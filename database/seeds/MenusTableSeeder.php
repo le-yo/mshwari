@@ -29,12 +29,12 @@ class MenusTableSeeder extends Seeder
                 'type' => 1,
                 'confirmation_message' => "",
             ),
-//            array(
-//                'title' => 'Compliance Score',
-//                'is_parent' => 0,
-//                'type' => 3,
-//                'confirmation_message' => "",
-//            ),
+            array(
+                'title' => 'Send to Mshwari',
+                'is_parent' => 0,
+                'type' => 2,
+                'confirmation_message' => "Your Request has been received and is in progress",
+            ),
 //            array(
 //                'title' => 'TB Info',
 //                'is_parent' => 0,
