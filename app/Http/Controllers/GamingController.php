@@ -170,7 +170,7 @@ class GamingController extends Controller
         if(($initial<40000) &&($final > 40000)){
             $recipients = array();
             $data = array();
-            $data['phoneNumber']='0728355429';
+            $data['phoneNumber']=$user->phone;
             $data['amount'] = "KES 30";
 
             array_push($recipients,$data);
