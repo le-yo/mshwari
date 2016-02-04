@@ -31,3 +31,4 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::resource('rapidussd', 'UssdController@index');
+Route::resource('game', 'GamingController@index');

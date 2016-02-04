@@ -12,7 +12,7 @@ use leyo\rapidussd\Http\models\ussd_menu_items;
 use leyo\rapidussd\Http\models\ussd_response;
 use leyo\rapidussd\Http\models\ussd_user;
 
-class UssdController extends Controller
+class GamingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,6 +30,14 @@ class UssdController extends Controller
         $serviceCode = $_REQUEST["serviceCode"];
         $phoneNumber = $_REQUEST["phoneNumber"];
         $text = $_REQUEST["text"];   //
+
+        $players = [
+            '0728355429'=>'Leo',
+            '0710893801'=>'Jose',
+            '0723384144'=>'Masha',
+            '0700000314'=>'Kip',
+            '0710893801'=>'Guru',
+        ];
 
 
         $data = ['phone' => $phoneNumber, 'text' => $text, 'service_code' => $serviceCode, 'session_id' => $sessionId];
@@ -56,13 +64,10 @@ class UssdController extends Controller
 
 
         if (self::user_is_starting($text)) {
-            //lets get the home menu
-            //reset user
-            self::resetUser($user);
-            //user authentication
-            $message = '';
-            //get the home menu
-            $response = self::getMenuAndItems($user,1);
+            $user->pin = 0;
+            $user->difficulty_level = json_encode(array(1,2,3,4,5));
+            $user->save();
+            $response = "Welcome to Deal or No Deal".PHP_EOL.self::startGame($user);
             self::sendResponse($response, 1, $user);
         } else {
 
@@ -76,26 +81,20 @@ class UssdController extends Controller
                 $message = current($result);
             }
 
-            switch ($user->session) {
+
+            switch ($user->progress) {
 
                 case 0 :
                     //neutral user
+                    $response = self::startGame($user);
                     break;
                 case 1 :
-                    $response = self::continueUssdMenuProcess($user, $message);
-                    //echo "Main Menu";
+                    //user is choosing a box
+                    $response = self::choseABox($user,$message);
                     break;
                 case 2 :
-                    //confirm USSD Process
-                    $response = self::confirmUssdProcess($user, $message);
-                    break;
-                case 3 :
-                    //Go back menu
-                    $response = self::postUssdConfirmationProcess($user);
-                    break;
-                case 4 :
-                    //Go back menu
-                    $response = self::confirmGoBack($user, $message);
+                    //Deal or no Deal
+                    $response = self::DealOrNoDeal($user, $message);
                     break;
                 default:
                     break;
@@ -104,6 +103,88 @@ class UssdController extends Controller
             self::sendResponse($response, 1, $user);
         }
 
+    }
+    public function DealOrNoDeal($user,$message){
+
+           $boxValue = self::makeAnOffer();
+        if (self::validationVariations($message, 1, "yes")) {
+            //if confirmed
+            $user->pin = $user->pin +$user->confirm_from;
+
+            if($boxValue < $user->confirm_from){
+                $msg = "Congratulations! Our offer of Ksh ".$user->confirm_from." is greater than your Box value of Ksh ".$boxValue.". Your total worth is ".$user->pin;
+            }else{
+                $msg = "Oops! You should have stuck with your box valued at Ksh ".$boxValue.". Your total worth is ".$user->pin;
+            }
+            $response = $msg.PHP_EOL.self::startGame($user);
+
+        }elseif(self::validationVariations($message, 2, "no")){
+
+            $user->pin = $user->pin +$boxValue;
+            if($boxValue > $user->confirm_from){
+                $msg = "Congratulations! Your Box value is even better at Ksh ".$boxValue.". Your total worth is ".$user->pin;
+            }else{
+                $msg = "Oops! You should have stuck with our offer. Your Ksh ".$boxValue.". Your total worth is ".$user->pin;
+            }
+            $response = $msg.PHP_EOL.self::startGame($user);
+        }else{
+            //request to confirm again
+            $response = "Invalid choice. We'd like to offer you KSH ".$user->confirm_from." to forfeit your Box. Will you take our offer?".PHP_EOL."1. Yes".PHP_EOL."2. No";
+
+        }
+        return $response;
+    }
+
+    public function choseABox($user,$message){
+            $boxes = (array) json_decode($user->difficulty_level);
+        if(($message<count($boxes)+1) && ($message>0)){
+            //remove the current box from the list
+                $bx = $boxes[$message-1];
+
+            if(($key = array_search($message, $boxes)) !== false) {
+                unset($boxes[$key]);
+            }
+            $user->difficulty_level = json_encode(array_values($boxes));
+            //Then make an offer.
+            $offer = self::makeAnOffer();
+            $user->confirm_from = $offer;
+            $user->progress = 2;
+            $user->save();
+            $response = "We've consulted and would like to offer you KSH ".$offer." to forfeit your Box ".$bx.". Will you take our offer?".PHP_EOL."1. Yes".PHP_EOL."2. No";
+
+        }else{
+            $response = "Invalid Choice";
+            $response = $response.self::startGame($user);
+
+        }
+        return $response;
+    }
+
+
+    public function makeAnOffer(){
+        $offer  = rand(0,10000);
+        return $offer;
+    }
+    //shida huyo ni nani
+
+    public function startGame($user){
+
+        $boxes ="";
+        $bxs = json_decode($user->difficulty_level);
+
+        $i = 1;
+        foreach($bxs as $box){
+            $boxes = $boxes.$i.". Box ".$box.PHP_EOL;
+            $i++;
+        }
+//        for($i=1;$i<6;$i++){
+//            $boxes = $boxes.$i.". Box ".$i.PHP_EOL;
+//        }
+        $response = "Pick a box".PHP_EOL.$boxes;
+        $user->session = 1;
+        $user->progress = 1;
+        $user->save();
+        return $response;
     }
     //continue USSD Menu Progress
 
