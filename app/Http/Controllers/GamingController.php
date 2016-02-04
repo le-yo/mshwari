@@ -21,6 +21,7 @@ class GamingController extends Controller
      */
     public function index()
     {
+
         error_reporting(0);
         header('Content-type: text/plain');
         set_time_limit(100);
@@ -133,10 +134,44 @@ class GamingController extends Controller
 
         }
         $final = $user->pin;
-        if(($initial<20000) &&($final > 20000)){
+        if(($initial<10000) &&($final > 10000)){
+            $recipients = array();
             $data = array();
-            $data['phoneNumber']=$user->phone;
+            $data['phoneNumber']='0728355429';
+            $data['amount'] = "KES 5";
+
+            array_push($recipients,$data);
+//sending the airtime
+            $notify = new NotifyController();
+            $notify->sendAirtime($recipients);
+        }
+        if(($initial<20000) &&($final > 20000)){
+            $recipients = array();
+            $data = array();
+            $data['phoneNumber']='0728355429';
             $data['amount'] = "KES 10";
+
+            array_push($recipients,$data);
+//sending the airtime
+            $notify = new NotifyController();
+            $notify->sendAirtime($recipients);
+        }
+        if(($initial<30000) &&($final > 30000)){
+            $recipients = array();
+            $data = array();
+            $data['phoneNumber']='0728355429';
+            $data['amount'] = "KES 20";
+
+            array_push($recipients,$data);
+//sending the airtime
+            $notify = new NotifyController();
+            $notify->sendAirtime($recipients);
+        }
+        if(($initial<40000) &&($final > 40000)){
+            $recipients = array();
+            $data = array();
+            $data['phoneNumber']='0728355429';
+            $data['amount'] = "KES 30";
 
             array_push($recipients,$data);
 //sending the airtime

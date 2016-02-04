@@ -41,8 +41,8 @@
       <file leaf-file-name="GamingController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GamingController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30729166" vertical-offset="1953" max-vertical-offset="9870">
-              <caret line="142" column="44" selection-start-line="142" selection-start-column="44" selection-end-line="142" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.453125" vertical-offset="2334" max-vertical-offset="10395">
+              <caret line="173" column="36" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -53,8 +53,8 @@
       <file leaf-file-name="AfricasTalkingGateway.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AfricasTalkingGateway.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="3420">
-              <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+            <state vertical-scroll-proportion="-3.4705882" vertical-offset="3573" max-vertical-offset="5115">
+              <caret line="250" column="20" selection-start-line="250" selection-start-column="20" selection-end-line="250" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -63,8 +63,8 @@
       <file leaf-file-name="NotifyController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotifyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.5" vertical-offset="570" max-vertical-offset="2595">
-              <caret line="50" column="44" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="44" />
+            <state vertical-scroll-proportion="-14.0" vertical-offset="999" max-vertical-offset="2595">
+              <caret line="89" column="38" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="44" />
               <folding>
                 <element signature="e#40#62#0#PHP" expanded="true" />
               </folding>
@@ -110,8 +110,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="68" />
-    <option name="y" value="98" />
+    <option name="x" value="164" />
+    <option name="y" value="113" />
     <option name="width" value="1280" />
     <option name="height" value="724" />
   </component>
@@ -263,7 +263,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="98" width="1280" height="724" extended-state="6" />
+    <frame x="164" y="113" width="1280" height="724" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -453,28 +453,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AfricasTalkingGateway.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="3420">
-          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotifyController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.5" vertical-offset="570" max-vertical-offset="2595">
-          <caret line="50" column="44" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="44" />
+        <state vertical-scroll-proportion="-14.0" vertical-offset="999" max-vertical-offset="2595">
+          <caret line="89" column="38" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="44" />
           <folding>
             <element signature="e#40#62#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AfricasTalkingGateway.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.4705882" vertical-offset="3573" max-vertical-offset="5115">
+          <caret line="250" column="20" selection-start-line="250" selection-start-column="20" selection-end-line="250" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GamingController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30729166" vertical-offset="1953" max-vertical-offset="9870">
-          <caret line="142" column="44" selection-start-line="142" selection-start-column="44" selection-end-line="142" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.453125" vertical-offset="2334" max-vertical-offset="10395">
+          <caret line="173" column="36" selection-start-line="173" selection-start-column="36" selection-end-line="173" selection-end-column="36" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>

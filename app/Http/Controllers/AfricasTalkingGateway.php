@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 class AfricasTalkingGatewayException extends \Exception{}
 
+
 class AfricasTalkingGateway
 {
     protected $_username;
@@ -15,23 +16,23 @@ class AfricasTalkingGateway
     protected $_responseBody;
     protected $_responseInfo;
 
-    const SMS_URL               = 'https://api.africastalking.com/version1/messaging';
-    const VOICE_URL             = 'https://voice.africastalking.com/call';
-    const USER_DATA_URL         = 'https://api.africastalking.com/version1/user';
-    const SUBSCRIPTION_DATA_URL = 'https://api.africastalking.com/version1/subscription';
+    const SMS_URL          = 'https://api.africastalking.com/version1/messaging';
+    const VOICE_URL        = 'https://voice.africastalking.com';
+    const USER_DATA_URL    = 'https://api.africastalking.com/version1/user';
+    const SUBSCRIPTION_URL = 'https://api.africastalking.com/version1/subscription';
+    const AIRTIME_URL      = 'https://api.africastalking.com/version1/airtime';
 
-    /*
-     * Turn this on if you run into problems. It will print the raw HTTP response from our server
-     */
-    const Debug             = False;
+
+    //Turn this on if you run into problems. It will print the raw HTTP response from our server
+    const Debug            = false;
 
     const HTTP_CODE_OK      = 200;
     const HTTP_CODE_CREATED = 201;
 
     public function __construct($username_, $apiKey_)
     {
-        $this->_username = $username_;
-        $this->_apiKey   = $apiKey_;
+        $this->_username    = $username_;
+        $this->_apiKey      = $apiKey_;
 
         $this->_requestBody = null;
         $this->_requestUrl  = null;
@@ -40,21 +41,10 @@ class AfricasTalkingGateway
         $this->_responseInfo = null;
     }
 
+
+    //Messaging methods
     public function sendMessage($to_, $message_, $from_ = null, $bulkSMSMode_ = 1, Array $options_ = array())
     {
-        /*
-         * The optional from_ parameter should be populated with the value of a shortcode or alphanumeric that is
-         * registered with us
-         * The optional  bulkSMSMode_ will be used by the Mobile Service Provider to determine who gets billed for a
-         * message sent using a Mobile-Terminated ShortCode. The default value is 1 (which means that
-         * you, the sender, gets charged). This parameter will be ignored for messages sent using
-         * alphanumerics or Mobile-Originated shortcodes.
-         * Other options can be passed into the assiative options_ array. These are:
-         * - enqueue : Useful when sending a lot of messages at once where speed is of the essence
-         * - keyword : Specify which subscription product to use to send messages for premium rated short codes
-         * - linkId  : Specified when responding to an on-demand content request on a premium rated short code
-         */
-
         if ( strlen($to_) == 0 || strlen($message_) == 0 ) {
             throw new AfricasTalkingGatewayException('Please supply both to and message parameters');
         }
@@ -70,12 +60,16 @@ class AfricasTalkingGateway
             $params['bulkSMSMode'] = $bulkSMSMode_;
         }
 
+        //This contains a list of parameters that can be passed in $options_ parameter
         if ( count($options_) > 0 ) {
             $allowedKeys = array (
                 'enqueue',
                 'keyword',
                 'linkId',
+                'retryDurationInHours'
             );
+
+            //Check whether data has been passed in options_ parameter
             foreach ( $options_ as $key => $value ) {
                 if ( in_array($key, $allowedKeys) && strlen($value) > 0 ) {
                     $params[$key] = $value;
@@ -87,15 +81,103 @@ class AfricasTalkingGateway
 
         $this->_requestUrl  = self::SMS_URL;
         $this->_requestBody = http_build_query($params, '', '&');
-        $this->execute('POST');
 
-        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_CREATED ) {
-            throw new AfricasTalkingGatewayException($this->_responseBody->SMSMessageData->Message);
+        $this->executePOST();
+
+        if ( $this->_responseInfo['http_code'] == self::HTTP_CODE_CREATED ) {
+            $responseObject = json_decode($this->_responseBody);
+            return $responseObject->SMSMessageData->Recipients;
         }
 
-        return $this->_responseBody->SMSMessageData->Recipients;
+        throw new AfricasTalkingGatewayException($this->_responseBody);
     }
 
+
+    public function fetchMessages($lastReceivedId_)
+    {
+        $username = $this->_username;
+        $this->_requestUrl = self::SMS_URL.'?username='.$username.'&lastReceivedId='. intval($lastReceivedId_);
+
+        $this->executeGet();
+
+        if ( $this->_responseInfo['http_code'] == self::HTTP_CODE_OK ) {
+            $responseObject = json_decode($this->_responseBody);
+            return $responseObject->SMSMessageData->Messages;
+        }
+
+        throw new AfricasTalkingGatewayException($this->_responseBody);
+    }
+
+
+    //Subscription methods
+    public function createSubscription($phoneNumber_, $shortCode_, $keyword_)
+    {
+
+        if ( strlen($phoneNumber_) == 0 || strlen($shortCode_) == 0 || strlen($keyword_) == 0 ) {
+            throw new AfricasTalkingGatewayException('Please supply phoneNumber, shortCode and keyword');
+        }
+
+        $params = array(
+            'username'    => $this->_username,
+            'phoneNumber' => $phoneNumber_,
+            'shortCode'   => $shortCode_,
+            'keyword'     => $keyword_
+        );
+
+        $this->_requestUrl  = self::SUBSCRIPTION_URL."/create";
+        $this->_requestBody = http_build_query($params, '', '&');
+
+        $this->executePOST();
+
+        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_CREATED )
+            throw new AfricasTalkingGatewayException($this->_responseBody);
+
+        return json_decode($this->_responseBody);
+    }
+
+    public function deleteSubscription($phoneNumber_, $shortCode_, $keyword_)
+    {
+        if ( strlen($phoneNumber_) == 0 || strlen($shortCode_) == 0 || strlen($keyword_) == 0 ) {
+            throw new AfricasTalkingGatewayException('Please supply phoneNumber, shortCode and keyword');
+        }
+
+        $params = array(
+            'username'    => $this->_username,
+            'phoneNumber' => $phoneNumber_,
+            'shortCode'   => $shortCode_,
+            'keyword'     => $keyword_
+        );
+
+        $this->_requestUrl  = self::SUBSCRIPTION_URL."/delete";
+        $this->_requestBody = http_build_query($params, '', '&');
+
+        $this->executePOST();
+
+        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_CREATED )
+            throw new AfricasTalkingGatewayException($this->_responseBody);
+
+        return json_decode($this->_responseBody);
+
+    }
+
+    public function fetchPremiumSubscriptions($shortCode_, $keyword_, $lastReceivedId_ = 0)
+    {
+        $username = $this->_username;
+        $this->_requestUrl  = self::SUBSCRIPTION_URL.'?username='.$username.'&shortCode='.$shortCode_;
+        $this->_requestUrl .= '&keyword='.$keyword_.'&lastReceivedId='.intval($lastReceivedId_);
+
+        $this->executeGet();
+
+        if ( $this->_responseInfo['http_code'] == self::HTTP_CODE_OK ) {
+            $responseObject = json_decode($this->_responseBody);
+            return $responseObject->responses;
+        }
+
+        throw new AfricasTalkingGatewayException($this->_responseBody);
+    }
+
+
+    //Call methods
     public function call($from_, $to_)
     {
         if ( strlen($from_) == 0 || strlen($to_) == 0 ) {
@@ -108,108 +190,140 @@ class AfricasTalkingGateway
             'to'       => $to_
         );
 
-        $this->_requestUrl  = self::VOICE_URL;
+        $this->_requestUrl  = self::VOICE_URL . "/call";
         $this->_requestBody = http_build_query($params, '', '&');
-        $this->execute('POST');
 
-        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_CREATED ) {
-            throw new AfricasTalkingGatewayException($this->_responseBody->ErrorMessage);
+        $this->executePOST();
+
+        if(($responseObject = json_decode($this->_responseBody)) !== null) {
+            if(strtoupper(trim($responseObject->errorMessage)) == "NONE") {
+                return $responseObject->entries;
+            }
+            throw new AfricasTalkingGatewayException($responseObject->errorMessage);
         }
+        else
+            throw new AfricasTalkingGatewayException($this->_responseBody);
     }
 
-    public function fetchMessages($lastReceivedId_)
+    public function getNumQueuedCalls($phoneNumber_, $queueName = null)
     {
-        $username = $this->_username;
-        $this->_requestUrl = self::SMS_URL.'?username='.$username.'&lastReceivedId='.intval($lastReceivedId_);
+        $this->_requestUrl = self::VOICE_URL . "/queueStatus";
+        $params = array(
+            "username"     => $this->_username,
+            "phoneNumbers" => $phoneNumber_
+        );
+        if($queueName !== null)
+            $params['queueName'] = $queueName;
+        $this->_requestBody   = http_build_query($params, '', '&');
+        $this->executePOST();
 
-        $this->execute('GET');
-        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_OK ) {
-            throw new AfricasTalkingGatewayException($this->_responseBody->SMSMessageData->Message);
+        if(($responseObject = json_decode($this->_responseBody)) !== null) {
+            if(strtoupper(trim($responseObject->errorMessage)) == "NONE")
+                return $responseObject->entries;
+            throw new AfricasTalkingGatewayException($responseObject->ErrorMessage);
         }
-        return $this->_responseBody->SMSMessageData->Messages;
+
+        throw new AfricasTalkingGatewayException($this->_responseBody);
     }
 
-    public function fetchPremiumSubscriptions($shortCode_, $keyword_, $lastReceivedId_)
+
+    public function uploadMediaFile($url_)
     {
-        $username = $this->_username;
-        $this->_requestUrl  = self::SUBSCRIPTION_DATA_URL.'?username='.$username.'&shortCode='.$shortCode_;
-        $this->_requestUrl .= '&keyword='.$keyword_.'&lastReceivedId='.intval($lastReceivedId_);
+        $params = array(
+            "username" => $this->_username,
+            "url"      => $url_
+        );
 
-        $this->execute('GET');
-        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_OK ) {
-            throw new AfricasTalkingGatewayException($this->_responseBody->SubscriptionData->Message);
+        $this->_requestBody = http_build_query($params, '', '&');
+        $this->_requestUrl  = self::VOICE_URL . "/mediaUpload";
+
+        $this->executePOST();
+
+        if(($responseObject = json_decode($this->_responseBody)) !== null) {
+            if(strtoupper(trim($responseObject->errorMessage)) != "NONE")
+                throw new AfricasTalkingGatewayException($responseObject->errorMessage);
         }
-
-        return $this->_responseBody->SubscriptionData->Subscriptions;
+        else
+            throw new AfricasTalkingGatewayException($this->_responseBody);
     }
 
+
+    //Airtime method
+    public function sendAirtime($recipients)
+    {
+        $params = array(
+            "username"    => $this->_username,
+            "recipients"  => $recipients
+        );
+        $this->_requestUrl  = self::AIRTIME_URL . "/send";
+        $this->_requestBody = http_build_query($params, '', '&');
+
+        $this->executePOST();
+
+        if($this->_responseInfo['http_code'] == self::HTTP_CODE_CREATED) {
+            $responseObject = json_decode($this->_responseBody);
+            if(count($responseObject->responses) > 0)
+                return $responseObject->responses;
+
+            throw new AfricasTalkingGatewayException($responseObject->errorMessage);
+        }
+
+        throw new AfricasTalkingGatewayException($this->_responseBody);
+    }
+
+    //User info method
     public function getUserData()
     {
         $username = $this->_username;
         $this->_requestUrl = self::USER_DATA_URL.'?username='.$username;
-        $this->execute('GET');
+        $this->executeGet();
 
-        if ( $this->_responseInfo['http_code'] != self::HTTP_CODE_OK ) {
-            throw new AfricasTalkingGatewayException($this->_responseBody->UserData->Message);
+        if ( $this->_responseInfo['http_code'] == self::HTTP_CODE_OK ) {
+            $responseObject = json_decode($this->_responseBody);
+            return $responseObject->UserData;
         }
 
-        return $this->_responseBody->UserData;
+        throw new AfricasTalkingGatewayException($this->_responseBody);
     }
 
-
-    protected function execute ($verb_)
+    private function executeGet ()
     {
         $ch = curl_init();
+        $this->doExecute($ch);
+    }
+
+    private function executePost ()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_requestBody);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $this->doExecute($ch);
+    }
+
+    private function doExecute (&$curlHandle_)
+    {
         try {
-            switch (strtoupper($verb_)){
-                case 'GET':
-                    $this->executeGet($ch);
-                    break;
-                case 'POST':
-                    $this->executePost($ch);
-                    break;
-                default:
-                    throw new InvalidArgumentException('Current verb (' . $verb_ . ') is not implemented.');
+
+            $this->setCurlOpts($curlHandle_);
+            $responseBody = curl_exec($curlHandle_);
+
+            if ( self::Debug ) {
+                echo "Full response: ". print_r($responseBody, true)."\n";
             }
+
+            $this->_responseInfo = curl_getinfo($curlHandle_);
+
+            $this->_responseBody = $responseBody;
+            curl_close($curlHandle_);
         }
-        catch (InvalidArgumentException $e){
-            curl_close($ch);
+
+        catch(Exeption $e) {
+            curl_close($curlHandle_);
             throw $e;
         }
-        catch (Exception $e){
-            curl_close($ch);
-            throw $e;
-        }
     }
 
-    protected function doExecute (&$curlHandle_)
-    {
-        $this->setCurlOpts($curlHandle_);
-        $responseBody = curl_exec($curlHandle_);
-
-        if ( self::Debug ) {
-            echo "Full response: ".print_r($responseBody, true);
-        }
-
-        $this->_responseInfo = curl_getinfo($curlHandle_);
-        $this->_responseBody = json_decode($responseBody);
-
-        curl_close($curlHandle_);
-    }
-
-    protected function executeGet ($ch_)
-    {
-        $this->doExecute($ch_);
-    }
-
-    protected function executePost ($ch_)
-    {
-        curl_setopt($ch_, CURLOPT_POSTFIELDS, $this->_requestBody);
-        curl_setopt($ch_, CURLOPT_POST, 1);
-        $this->doExecute($ch_);
-    }
-
-    protected function setCurlOpts (&$curlHandle_)
+    private function setCurlOpts (&$curlHandle_)
     {
         curl_setopt($curlHandle_, CURLOPT_TIMEOUT, 60);
         curl_setopt($curlHandle_, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -219,4 +333,3 @@ class AfricasTalkingGateway
             'apikey: ' . $this->_apiKey));
     }
 }
-
