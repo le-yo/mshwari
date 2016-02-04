@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use leyo\africastalkinglaravelgateway\NotifyController;
 use leyo\rapidussd\Http\models\ussd_logs;
 use leyo\rapidussd\Http\models\ussd_menu;
 use leyo\rapidussd\Http\models\ussd_menu_items;
