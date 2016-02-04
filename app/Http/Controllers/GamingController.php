@@ -137,7 +137,7 @@ class GamingController extends Controller
         if(($initial<10000) &&($final > 10000)){
             $recipients = array();
             $data = array();
-            $data['phoneNumber']='0728355429';
+            $data['phoneNumber']=$user->phone;
             $data['amount'] = "KES 5";
 
             array_push($recipients,$data);
@@ -148,7 +148,7 @@ class GamingController extends Controller
         if(($initial<20000) &&($final > 20000)){
             $recipients = array();
             $data = array();
-            $data['phoneNumber']='0728355429';
+            $data['phoneNumber']=$user->phone;
             $data['amount'] = "KES 10";
 
             array_push($recipients,$data);
@@ -159,7 +159,7 @@ class GamingController extends Controller
         if(($initial<30000) &&($final > 30000)){
             $recipients = array();
             $data = array();
-            $data['phoneNumber']='0728355429';
+            $data['phoneNumber']=$user->phone;
             $data['amount'] = "KES 20";
 
             array_push($recipients,$data);
