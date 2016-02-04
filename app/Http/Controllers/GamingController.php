@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use leyo\africastalkinglaravelgateway\NotifyController;
 use leyo\rapidussd\Http\models\ussd_logs;
 use leyo\rapidussd\Http\models\ussd_menu;
 use leyo\rapidussd\Http\models\ussd_menu_items;
@@ -105,7 +106,7 @@ class GamingController extends Controller
 
     }
     public function DealOrNoDeal($user,$message){
-
+        $initial = $user->pin;
            $boxValue = self::makeAnOffer();
         if (self::validationVariations($message, 1, "yes")) {
             //if confirmed
@@ -131,6 +132,17 @@ class GamingController extends Controller
             //request to confirm again
             $response = "Invalid choice. We'd like to offer you KSH ".$user->confirm_from." to forfeit your Box. Will you take our offer?".PHP_EOL."1. Yes".PHP_EOL."2. No";
 
+        }
+        $final = $user->pin;
+        if(($initial<20000) &&($final > 20000)){
+            $data = array();
+            $data['phoneNumber']=$user->phone;
+            $data['amount'] = "KES 10";
+
+            array_push($recipients,$data);
+//sending the airtime
+            $notify = new NotifyController();
+            $notify->sendAirtime($recipients);
         }
         return $response;
     }
