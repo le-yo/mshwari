@@ -55,7 +55,7 @@ class NotifyController extends Controller {
 		try
 		{
 			// Thats it, hit send and we'll take care of the rest.
-			$results = $gateway->sendMessage($to, $message,'Keheala');
+			$results = $gateway->sendMessage($to, $message);
 //			foreach($results as $result) {
 //				// Note that only the Status "Success" means the message was sent
 ////				echo " Number: " .$result->number;
@@ -66,7 +66,7 @@ class NotifyController extends Controller {
 		}
 		catch ( AfricasTalkingGatewayException $e )
 		{
-			//echo "Encountered an error while sending: ".$e->getMessage();
+//			echo "Encountered an error while sending: ".$e->getMessage();
 		}
 
 return;
