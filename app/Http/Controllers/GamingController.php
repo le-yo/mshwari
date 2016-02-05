@@ -59,11 +59,11 @@ class GamingController extends Controller
             $usr['progress'] = 0;
             $usr['confirm_from'] = 0;
             $usr['menu_item_id'] = 0;
-            $notify = new NotifyController();
+           $notify = new NotifyController();
             $notify->sendSms('0728355429','New Gamer: 0'.$no);
 
-            echo "hapa";
-            exit;
+            //echo "hapa";
+            //exit;
             $user = ussd_user::create($usr);
         }
 
