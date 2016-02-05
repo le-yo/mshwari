@@ -138,17 +138,17 @@ class GamingController extends Controller
 
         }
         $final = $user->pin;
-        if(($initial<10000) &&($final > 10000)){
-            $recipients = array();
-            $data = array();
-            $data['phoneNumber']=$user->phone;
-            $data['amount'] = "KES 5";
-
-            array_push($recipients,$data);
-//sending the airtime
-            $notify = new NotifyController();
-            $notify->sendAirtime($recipients);
-        }
+//        if(($initial<10000) &&($final > 10000)){
+//            $recipients = array();
+//            $data = array();
+//            $data['phoneNumber']=$user->phone;
+//            $data['amount'] = "KES 5";
+//
+//            array_push($recipients,$data);
+////sending the airtime
+//            $notify = new NotifyController();
+//            $notify->sendAirtime($recipients);
+//        }
         if(($initial<20000) &&($final > 20000)){
             $recipients = array();
             $data = array();
@@ -158,7 +158,7 @@ class GamingController extends Controller
             array_push($recipients,$data);
 //sending the airtime
             $notify = new NotifyController();
-            $notify->sendAirtime($recipients);
+           // $notify->sendAirtime($recipients);
         }
         if(($initial<30000) &&($final > 30000)){
             $recipients = array();
@@ -169,7 +169,7 @@ class GamingController extends Controller
             array_push($recipients,$data);
 //sending the airtime
             $notify = new NotifyController();
-            $notify->sendAirtime($recipients);
+            //$notify->sendAirtime($recipients);
         }
         if(($initial<40000) &&($final > 40000)){
             $recipients = array();
@@ -180,7 +180,7 @@ class GamingController extends Controller
             array_push($recipients,$data);
 //sending the airtime
             $notify = new NotifyController();
-            $notify->sendAirtime($recipients);
+           // $notify->sendAirtime($recipients);
         }
         return $response;
     }
