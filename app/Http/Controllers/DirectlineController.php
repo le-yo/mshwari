@@ -86,25 +86,43 @@ class DirectlineController extends Controller
                 // move the internal pointer to the end of the array
                 $message = current($result);
             }
-            $response = "Your insurance for ".$message." has been activated";
-            $notify = new NotifyController();
-            $notify->sendSms($user->phone_no,$response);
-            self::sendResponse($response,3,$user);
-            exit;
+//            $response = "Your insurance for ".$message." has been activated";
+//            $notify = new NotifyController();
+//            $notify->sendSms($user->phone_no,$response);
+//            self::sendResponse($response,3,$user);
+//            exit;
 
             switch ($user->progress) {
 
                 case 0 :
                     //neutral user
-                    $response = self::startGame($user);
+                    $user->progress = 1;
+                    $user->save();
+                    $response = "Enter Matatu No";
+//                    $response = self::choseABox($user,$message);
+                    break;
                     break;
                 case 1 :
                     //user is choosing a box
-                    $response = self::choseABox($user,$message);
+                    $user->progress = 2;
+                    $user->save();
+                    $response = "Enter ID No";
+//                    $response = self::choseABox($user,$message);
                     break;
                 case 2 :
-                    //Deal or no Deal
-                    $response = self::DealOrNoDeal($user, $message);
+                    //user is choosing a box
+                    $user->progress = 3;
+                    $user->save();
+                    $response = "Terms & Conditions".PHP_EOL."1. Accept";
+//                    $response = self::choseABox($user,$message);
+                    break;
+                case 3 :
+                    //user is choosing a box
+                    $response = "Your insurance for this trip has been activated";
+            //$notify = new NotifyController();
+            //$notify->sendSms($user->phone_no,$response);
+                self::sendResponse($response,3,$user);
+                exit;
                     break;
                 default:
                     break;
@@ -224,6 +242,9 @@ class DirectlineController extends Controller
 
     public function startGame($user){
 
+        $user->session = 1;
+        $user->progress = 1;
+        $user->save();
         return "Enter the Matatu code";
 
         $boxes ="";
@@ -238,9 +259,6 @@ class DirectlineController extends Controller
 //            $boxes = $boxes.$i.". Box ".$i.PHP_EOL;
 //        }
         $response = "Pick a box".PHP_EOL.$boxes;
-        $user->session = 1;
-        $user->progress = 1;
-        $user->save();
         return $response;
     }
     //continue USSD Menu Progress
