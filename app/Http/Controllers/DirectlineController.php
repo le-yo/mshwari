@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
 use leyo\rapidussd\Http\models\ussd_logs;
 use leyo\rapidussd\Http\models\ussd_menu;
 use leyo\rapidussd\Http\models\ussd_menu_items;
 use leyo\rapidussd\Http\models\ussd_response;
 use leyo\rapidussd\Http\models\ussd_user;
 
-class GamingController extends Controller
+class DirectlineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -59,7 +60,7 @@ class GamingController extends Controller
             $usr['progress'] = 0;
             $usr['confirm_from'] = 0;
             $usr['menu_item_id'] = 0;
-           $notify = new NotifyController();
+            $notify = new NotifyController();
             $notify->sendSms('0728355429','New Gamer: 0'.$no);
 
             //echo "hapa";
@@ -72,7 +73,7 @@ class GamingController extends Controller
             $user->pin = 0;
             $user->difficulty_level = json_encode(array(1,2,3,4,5));
             $user->save();
-            $response = "Welcome to Deal or No Deal".PHP_EOL.self::startGame($user);
+            $response = "Welcome to Directline Insure".PHP_EOL.self::startGame($user);
             self::sendResponse($response, 1, $user);
         } else {
 
@@ -85,7 +86,9 @@ class GamingController extends Controller
                 // move the internal pointer to the end of the array
                 $message = current($result);
             }
-
+            $response = "Your insurance for ".$message." has been activated";
+            self::sendResponse($response,3,$user);
+            exit;
 
             switch ($user->progress) {
 
@@ -111,7 +114,7 @@ class GamingController extends Controller
     }
     public function DealOrNoDeal($user,$message){
         $initial = $user->pin;
-           $boxValue = self::makeAnOffer();
+        $boxValue = self::makeAnOffer();
         if (self::validationVariations($message, 1, "yes")) {
             //if confirmed
             $user->pin = $user->pin +$user->confirm_from;
@@ -186,10 +189,10 @@ class GamingController extends Controller
     }
 
     public function choseABox($user,$message){
-            $boxes = (array) json_decode($user->difficulty_level);
+        $boxes = (array) json_decode($user->difficulty_level);
         if(($message<count($boxes)+1) && ($message>0)){
             //remove the current box from the list
-                $bx = $boxes[$message-1];
+            $bx = $boxes[$message-1];
 
             if(($key = array_search($message, $boxes)) !== false) {
                 unset($boxes[$key]);
@@ -218,6 +221,8 @@ class GamingController extends Controller
     //shida huyo ni nani
 
     public function startGame($user){
+
+        return "Enter the Matatu code";
 
         $boxes ="";
         $bxs = json_decode($user->difficulty_level);
