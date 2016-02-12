@@ -87,6 +87,8 @@ class DirectlineController extends Controller
                 $message = current($result);
             }
             $response = "Your insurance for ".$message." has been activated";
+            $notify = new NotifyController();
+            $notify->sendSms($user->phone_no,$response);
             self::sendResponse($response,3,$user);
             exit;
 
