@@ -47,7 +47,7 @@ A: Pumpkin Pi
 A: Because you can't drink and derive.
 
         ","Q: Why didn't the number 4 get into the nightclub?
-A: Because he is 2 square
+A: Because he is 2 square","
 
 Q. Why was the math book sad?
 A. Because it had so many problems.
@@ -88,7 +88,7 @@ A: Prime Rib!
             ","Q: Why does nobody talk to circles?
                 A: Because there is no point!
             ","Q: What is a math teacher's favorite type of tree?
-A: A 'Geome-tree'
+A: A 'Geome-tree'","
 Q. What do you get if you cross a math teacher and a clock?
 A. Arithma-ticks!
 ","Q: What happened to the indeterminate form that got sick?
@@ -138,27 +138,27 @@ A: It couldn't get past the boundary line
 A: Just cos
 ","Q: What did the complementary angle say to the isosceles triangle?
 A: Nice Legs
-","Q: What is polite and works for the phone company? 
+","Q: What is polite and works for the phone company?
 A: A deferential operator
 ","Q: What do you get when you cross a mosquito with a mountain climber?
 A: Nothing. You can't cross a vector and a scalar.
             ","Q: What's nonorientable and lives in the sea? 
-A: Moebius Dick. 
+A: Moebius Dick. ","
 Q. Why was 6 afraid of 7?
 A. Because 7 8 9!
 ","Q: What do you call a dead parrot?
-A: Polygon
+A: Polygon","
 Q. What's the king of the pencil case?
 A. The ruler.
             ","Q: What did the zero say to the the eight?
-                A: Nice belt!
+                A: Nice belt!","
             Q. What's the difference between a diameter and a radius?
-A. A Radius
+A. A Radius","
 Q. What tool do you use in mathematics?
 A. Multi-plyers.
 ","Q: How does a mathematician call his dog?
-A: Cauchy, because it leaves a residue at every pole.
-Q. What's purple and commutes?
+A: Cauchy, because it leaves a residue at every pole.","
+Q: What's purple and commutes?
                 A. An Abelian grape.
             ","Q: What's yellow and imaginary?
 A: The square-root of negative banana
