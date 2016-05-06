@@ -90,14 +90,14 @@ return;
 			$results = $gateway->sendAirtime($recipientStringFormat);
 
 			foreach($results as $result) {
-//				echo $result->status;
-//				echo $result->amount;
-//				echo $result->phoneNumber;
-//				echo $result->discount;
-//				echo $result->requestId;
-//
-//				//Error message is important when the status is not Success
-//				echo $result->errorMessage;
+				echo $result->status;
+				echo $result->amount;
+				echo $result->phoneNumber;
+				echo $result->discount;
+				echo $result->requestId;
+
+				//Error message is important when the status is not Success
+				echo $result->errorMessage;
 			}
 		}
 		catch(AfricasTalkingGatewayException $e){
