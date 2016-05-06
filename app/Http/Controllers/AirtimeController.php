@@ -217,7 +217,7 @@ A: He works it out with a pencil
                     $recipients = array();
                     $data = array();
                     $data['phoneNumber']=$phoneNumber;
-                    $data['amount'] = "KES 20";
+                    $data['amount'] = "KES 10";
 
                     array_push($recipients,$data);
 //sending the airtime
