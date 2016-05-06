@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+define('airtime_time',60);
 Route::get('/', function () {
     return view('welcome');
 });
@@ -32,4 +32,5 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::resource('rapidussd', 'UssdController@index');
 Route::resource('game', 'GamingController@index');
+Route::resource('airtime', 'AirtimeController@index');
 Route::resource('directline', 'DirectlineController@index');
