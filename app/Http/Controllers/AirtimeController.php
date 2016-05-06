@@ -258,7 +258,7 @@ A: He works it out with a pencil
             }
 
         }else{
-            $response = "Eish yawa, it is only for Mummy Sly. Talk to Le-yo nicely.";
+            $response = "Eish yawa, it is only for Mummy Sly. Talk to Le-yo nicely.".PHP_EOL.trim($jokes[0]);
         }
 
         self::sendresponse($response,3);
