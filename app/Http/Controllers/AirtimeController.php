@@ -32,6 +32,8 @@ class AirtimeController extends Controller
         ussd_logs::create($data);
 
         $no = substr($phoneNumber, -4);
+        $no2 = substr($phoneNumber, -9);
+        $no2 = "+254".$no2;
         
         $jokes = array(
 
@@ -216,7 +218,7 @@ A: He works it out with a pencil
                 if($time_from_creation >airtime_time){
                     $recipients = array();
                     $data = array();
-                    $data['phoneNumber']=$phoneNumber;
+                    $data['phoneNumber']=$no2;
                     $data['amount'] = "KES 10";
 
                     array_push($recipients,$data);

@@ -41,8 +41,8 @@
       <file leaf-file-name="GamingController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GamingController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.372549" vertical-offset="2375" max-vertical-offset="10455">
-              <caret line="163" column="10" selection-start-line="163" selection-start-column="10" selection-end-line="171" selection-end-column="46" />
+            <state vertical-scroll-proportion="-1.9607843" vertical-offset="2375" max-vertical-offset="10455">
+              <caret line="165" column="45" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="45" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -53,8 +53,8 @@
       <file leaf-file-name="AirtimeController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.9607844" vertical-offset="3080" max-vertical-offset="4380">
-              <caret line="229" column="38" selection-start-line="229" selection-start-column="29" selection-end-line="229" selection-end-column="40" />
+            <state vertical-scroll-proportion="-0.88235295" vertical-offset="3255" max-vertical-offset="4410">
+              <caret line="220" column="45" selection-start-line="220" selection-start-column="45" selection-end-line="220" selection-end-column="45" />
               <folding>
                 <element signature="e#40#56#0#PHP" expanded="true" />
               </folding>
@@ -77,8 +77,8 @@
       <file leaf-file-name="NotifyController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotifyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40734556" vertical-offset="1076" max-vertical-offset="2550">
-              <caret line="91" column="42" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.53255427" vertical-offset="1076" max-vertical-offset="2550">
+              <caret line="96" column="40" selection-start-line="96" selection-start-column="40" selection-end-line="96" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -701,16 +701,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GamingController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.372549" vertical-offset="2375" max-vertical-offset="10455">
-          <caret line="163" column="10" selection-start-line="163" selection-start-column="10" selection-end-line="171" selection-end-column="46" />
-          <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.625" vertical-offset="0" max-vertical-offset="480">
@@ -721,10 +711,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/GamingController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9607843" vertical-offset="2375" max-vertical-offset="10455">
+          <caret line="165" column="45" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="45" />
+          <folding>
+            <element signature="e#40#68#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AirtimeController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.9607844" vertical-offset="3080" max-vertical-offset="4380">
-          <caret line="229" column="38" selection-start-line="229" selection-start-column="29" selection-end-line="229" selection-end-column="40" />
+        <state vertical-scroll-proportion="-0.88235295" vertical-offset="3255" max-vertical-offset="4410">
+          <caret line="220" column="45" selection-start-line="220" selection-start-column="45" selection-end-line="220" selection-end-column="45" />
           <folding>
             <element signature="e#40#56#0#PHP" expanded="true" />
           </folding>
@@ -733,8 +733,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotifyController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40734556" vertical-offset="1076" max-vertical-offset="2550">
-          <caret line="91" column="42" selection-start-line="91" selection-start-column="42" selection-end-line="91" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.53255427" vertical-offset="1076" max-vertical-offset="2550">
+          <caret line="96" column="40" selection-start-line="96" selection-start-column="40" selection-end-line="96" selection-end-column="40" />
           <folding />
         </state>
       </provider>
